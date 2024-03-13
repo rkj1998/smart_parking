@@ -219,6 +219,8 @@ class _StartPageState extends State<StartPage> {
                 ),
                 TextButton(
                     onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => const MyHomePage()));
                     },
                     child: const Text(
                       "Forgot Password?",

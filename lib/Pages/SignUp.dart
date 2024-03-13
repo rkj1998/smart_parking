@@ -1,13 +1,13 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
+import 'package:smart_parking/Pages/StartPage.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({super.key});
+  const Signup({Key? key}) : super(key: key);
 
   @override
   State<Signup> createState() => _SignupState();
@@ -57,7 +57,7 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     SimpleFontelicoProgressDialog _dialog = SimpleFontelicoProgressDialog(context: context, barrierDimisable:  false);
     return MaterialApp(
-      color: Colors.purple,
+      color: Colors.lightBlueAccent,
       title: "Sign Up",
       home: Scaffold(
         appBar: AppBar(
@@ -69,8 +69,8 @@ class _SignupState extends State<Signup> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Colors.purple,
-                      Colors.purpleAccent,
+                      Colors.lightBlueAccent,
+                      Colors.greenAccent,
                     ])
             ),
           ),
@@ -90,7 +90,7 @@ class _SignupState extends State<Signup> {
                         decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                            borderSide: BorderSide(color:Colors.purple,),
+                            borderSide: BorderSide(color:Colors.lightBlueAccent,),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -111,7 +111,7 @@ class _SignupState extends State<Signup> {
                         decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                            borderSide: BorderSide(color:Colors.purple,),
+                            borderSide: BorderSide(color:Colors.lightBlueAccent,),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -210,7 +210,7 @@ class _SignupState extends State<Signup> {
                         decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                            borderSide: BorderSide(color:Colors.purple,),
+                            borderSide: BorderSide(color:Colors.lightBlueAccent,),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -232,7 +232,7 @@ class _SignupState extends State<Signup> {
                         decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                            borderSide: BorderSide(color:Colors.purple,),
+                            borderSide: BorderSide(color:Colors.lightBlueAccent,),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -315,7 +315,7 @@ class _SignupState extends State<Signup> {
                             msg: "Please Enter A Proper First Name",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );
@@ -325,7 +325,7 @@ class _SignupState extends State<Signup> {
                             msg: "Please Enter A Proper Last Name",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );                      }
@@ -334,7 +334,7 @@ class _SignupState extends State<Signup> {
                             msg: "Please Select A Gender",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );                      }
@@ -343,7 +343,7 @@ class _SignupState extends State<Signup> {
                             msg: "Please Enter A Proper EMail",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );                      }
@@ -354,7 +354,7 @@ class _SignupState extends State<Signup> {
                             msg: "Password cannot be less than 6 digits and must contain an alphabet,number and a special character.",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );
@@ -364,7 +364,7 @@ class _SignupState extends State<Signup> {
                             msg: "Passwords Don't Match",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );
@@ -391,7 +391,6 @@ class _SignupState extends State<Signup> {
                             "Mobile":mob.text,
                             "ProfPic":"https://firebasestorage.googleapis.com/v0/b/hpc-enterprises.appspot.com/o/initial.png?alt=media&token=022c3fe6-cb2b-456f-8985-94b77c3a4c21",
                             "Balance":0,
-                            "myListings":[]
                           });
                           Fluttertoast.showToast(
                               msg: "A verification mail has been sent please verify to start using the application.",
@@ -402,11 +401,8 @@ class _SignupState extends State<Signup> {
                               fontSize: 16.0
                           );
                           _dialog.hide();
-                          /*
                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                               builder: (context) => const StartPage()),(Route<dynamic> route) => false);
-
-                           */
                         }
                         catch(e){
                           _dialog.hide();
@@ -431,7 +427,7 @@ class _SignupState extends State<Signup> {
                           borderRadius: BorderRadius.all(
                             Radius.circular(40.0),
                           ),
-                          color: Colors.purple,
+                          color: Colors.lightBlueAccent,
                         ),
                         margin: const EdgeInsets.all(10.0),
                         child: const Center(
