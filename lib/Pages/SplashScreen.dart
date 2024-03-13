@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parking/Pages/StartPage.dart';
+import 'package:smart_parking/Pages/home.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -46,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Widget _getLandingPage()  {
-  bool userVerified;
+  bool userVerified = false;
   verify() async {
     var user =  FirebaseAuth.instance.currentUser;
     if (user!.emailVerified) {
@@ -62,24 +64,20 @@ Widget _getLandingPage()  {
       }
     }
   }
-  return FutureBuilder<User>(
-      future: FirebaseAuth.instance.authStateChanges(),
+
+  return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
-        verify() ;
+        verify();
         if (snapshot.hasData) {
-          if(userverified==true) {
-            return HomeScreen();
-          }
-          else if (userverified==false){
-            return StartPage();
-          }
+          if (userVerified == true) {}
+          else if (userVerified == false) {}
           else {
-            return StartPage();
+            return const StartPage();
           }
         }
-        else{
-          return StartPage();
-        }
+        return const StartPage();
       }
+
   );
 }
