@@ -11,3 +11,4 @@ class ProfileData{
 }
 
 var listings;
+bool userVerified = false;

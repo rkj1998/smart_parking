@@ -2,8 +2,11 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_parking/Pages/StartPage.dart';
 import 'package:smart_parking/Pages/home.dart';
+
+import '../const.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -48,7 +51,6 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Widget _getLandingPage()  {
-  bool userVerified = false;
   verify() async {
     var user =  FirebaseAuth.instance.currentUser;
     if (user!.emailVerified) {
@@ -70,8 +72,20 @@ Widget _getLandingPage()  {
       builder: (BuildContext context, snapshot) {
         verify();
         if (snapshot.hasData) {
-          if (userVerified == true) {}
-          else if (userVerified == false) {}
+          if (userVerified == true) {
+            return const MyHomePage();
+          }
+          else if (userVerified == false) {
+            Fluttertoast.showToast(
+                msg: "Please verify your email address.",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.lightBlueAccent,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+            return const StartPage();
+          }
           else {
             return const StartPage();
           }

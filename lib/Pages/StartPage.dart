@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,22 +32,25 @@ class _StartPageState extends State<StartPage> {
     });
   }
 
-
+ 
   void checkLoginStatus()  async{
     await Firebase.initializeApp();
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User? user) async {
-      if (user != null) {
-        var data = await FirebaseFirestore.instance.collection("User Info").doc(
-            FirebaseAuth.instance.currentUser!.uid).get();
-        ProfileData.assignData(data);
-        setState(() {
-          isLoggedIn = true;
-        });
-      }
-    });
-
+    if(userVerified) {
+      FirebaseAuth.instance
+          .authStateChanges()
+          .listen((User? user) async {
+        if (user != null) {
+          var data = await FirebaseFirestore.instance.collection("User Info")
+              .doc(
+              FirebaseAuth.instance.currentUser!.uid)
+              .get();
+          ProfileData.assignData(data);
+          setState(() {
+            isLoggedIn = true;
+          });
+        }
+      });
+    }
   }
 
   @override
@@ -63,20 +65,20 @@ class _StartPageState extends State<StartPage> {
     SimpleFontelicoProgressDialog _dialog = SimpleFontelicoProgressDialog(context: context, barrierDimisable:  false);
     Size size = MediaQuery.of(context).size;
     return isLoggedIn?const MyHomePage(): MaterialApp(
-      color: Colors.purple,
+      color: Colors.lightBlueAccent,
       title: "StartPage",
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("Auction"),
+          title: const Text("Login"),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Colors.purple,
-                      Colors.purpleAccent,
+                      Colors.lightBlueAccent,
+                      Colors.greenAccent,
                     ])
             ),
           ),
@@ -95,7 +97,7 @@ class _StartPageState extends State<StartPage> {
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Quando",
-                    color: Colors.purple,
+                    color: Colors.lightBlueAccent,
                   ),),
                 ),
                 SizedBox(
@@ -114,7 +116,7 @@ class _StartPageState extends State<StartPage> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                            borderSide: BorderSide(color:Colors.purple,),
+                            borderSide: BorderSide(color:Colors.lightBlueAccent,),
                           ),
                           labelText: 'Email ID',
                         ),
@@ -167,7 +169,7 @@ class _StartPageState extends State<StartPage> {
                             msg: "Enter Email ID",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );                      }
@@ -176,7 +178,7 @@ class _StartPageState extends State<StartPage> {
                             msg: "Enter Email ID",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.purple,
+                            backgroundColor: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             fontSize: 16.0
                         );                         }
@@ -189,6 +191,8 @@ class _StartPageState extends State<StartPage> {
                             var data = await fireStore.collection("User Info").doc(_auth.currentUser!.uid).get();
                             ProfileData.assignData(data);
                             _dialog.hide();
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (context) => const MyHomePage()));
 
                           }
                           else{
@@ -197,23 +201,28 @@ class _StartPageState extends State<StartPage> {
                                 msg: "Please Verify your mail by clicking link sent on mail.",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.purple,
+                                backgroundColor: Colors.lightBlueAccent,
                                 textColor: Colors.white,
                                 fontSize: 16.0
                             );                             }
                         }).catchError((e) {
                           if (kDebugMode) {
                             print(e);
+
                           }
                           _dialog.hide();
                           Fluttertoast.showToast(
                               msg: "Invalid email or password.",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
-                              backgroundColor: Colors.purple,
+                              backgroundColor: Colors.lightBlueAccent,
                               textColor: Colors.white,
                               fontSize: 16.0
                           );                           });
+
+
+
+
                       }
                     }
                 ),
@@ -275,7 +284,7 @@ class LoginButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-          color: Colors.purple,
+          color: Colors.lightBlueAccent,
           child: TextButton(
             onPressed: press,
             child: Text(
