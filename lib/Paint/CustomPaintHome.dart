@@ -15,9 +15,9 @@ class TopBar_home extends StatelessWidget {
 
 class HomePainter extends CustomPainter{
 
-  Color colorOne = Colors.brown;
-  Color? colorTwo = Colors.brown[300];
-  Color? colorThree = Colors.brown[100];
+  Color colorOne = Colors.blueAccent;
+  Color colorTwo = Colors.greenAccent;
+  Color? colorThree = Colors.lightGreenAccent;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -46,7 +46,7 @@ class HomePainter extends CustomPainter{
     path.lineTo(size.width, 0);
     path.close();
 
-    paint.color = colorTwo!;
+    paint.color = colorTwo;
     canvas.drawPath(path, paint);
 
     path =Path();

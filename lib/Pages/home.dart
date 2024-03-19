@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   title: const Center(
                     child: Text(
-                      'Quick Park',
+                      'Smart Park',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 34,
@@ -81,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       trailing: GestureDetector(
                         onTap: (){
+
                         },
                         child: Icon(
                             Icons.search,

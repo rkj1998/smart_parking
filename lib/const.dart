@@ -12,3 +12,4 @@ class ProfileData{
 
 var listings;
 bool userVerified = false;
+String apiKey = "AIzaSyBgK6sXjgcSQALgFxiLid_sP2eQERwbbRg";
