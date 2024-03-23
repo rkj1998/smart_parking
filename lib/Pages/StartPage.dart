@@ -36,7 +36,6 @@ class _StartPageState extends State<StartPage> {
 
  
   void checkLoginStatus()  async{
-    await Firebase.initializeApp();
     if(userVerified) {
       FirebaseAuth.instance
           .authStateChanges()
@@ -46,7 +45,7 @@ class _StartPageState extends State<StartPage> {
               .doc(
               FirebaseAuth.instance.currentUser!.uid)
               .get();
-          ProfileData.assignData(data);
+          ProfileData.assignData(data.data());
           setState(() {
             isLoggedIn = true;
           });
@@ -192,7 +191,7 @@ class _StartPageState extends State<StartPage> {
                           if(user.user!.emailVerified)  {
                             FirebaseFirestore fireStore = FirebaseFirestore.instance;
                             var data = await fireStore.collection("User Info").doc(_auth.currentUser!.uid).get();
-                            ProfileData.assignData(data);
+                            ProfileData.assignData(data.data());
                             _dialog.hide();
                             Navigator.pushReplacement(context, MaterialPageRoute(
                                 builder: (context) => const MyHomePage()));

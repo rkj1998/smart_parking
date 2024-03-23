@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1016132990959',
     projectId: 'smart-parking-b83eb',
     storageBucket: 'smart-parking-b83eb.appspot.com',
+    iosClientId: '1016132990959-8tjan2rdopvn42b5eac75d3f6hg357j4.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartParking',
   );
 
@@ -76,6 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1016132990959',
     projectId: 'smart-parking-b83eb',
     storageBucket: 'smart-parking-b83eb.appspot.com',
+    iosClientId: '1016132990959-ruellkhedq7oeqncjjhfs1vqdfp3ur9g.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartParking.RunnerTests',
   );
 }

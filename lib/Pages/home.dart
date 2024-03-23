@@ -31,18 +31,6 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
 
-    // "android.permission.SYSTEM_ALERT_WINDOW" permission must be granted for
-    // onNotificationPressed function to be called.
-    //
-    // When the notification is pressed while permission is denied,
-    // the onNotificationPressed function is not called and the app opens.
-    //
-    // If you do not use the onNotificationPressed or launchApp function,
-    // you do not need to write this code.
-    if (!await FlutterForegroundTask.canDrawOverlays) {
-      // This function requires `android.permission.SYSTEM_ALERT_WINDOW` permission.
-      await FlutterForegroundTask.openSystemAlertWindowSettings();
-    }
 
     // Android 12 or higher, there are restrictions on starting a foreground service.
     //

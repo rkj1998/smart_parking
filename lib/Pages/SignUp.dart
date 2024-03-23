@@ -22,6 +22,8 @@ class _SignupState extends State<Signup> {
   TextEditingController lName = TextEditingController();
   TextEditingController mob = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController reg = TextEditingController();
+
 
   String gender = 'Select Gender';
   bool _obscureText = true;
@@ -246,7 +248,27 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 20,
                 ),
-
+                Row(children: <Widget>[
+                  Expanded(
+                      child: TextField(
+                        controller: reg,
+                        decoration: const InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                            borderSide: BorderSide(color:Colors.lightBlueAccent,),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40.0),
+                            ),
+                          ),
+                          labelText: 'Car Registration',
+                        ),
+                      ))
+                ]),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(children: <Widget>[
                   Expanded(
                       child: TextField(
@@ -390,7 +412,7 @@ class _SignupState extends State<Signup> {
                             "Email":email.text,
                             "Mobile":mob.text,
                             "ProfPic":"https://firebasestorage.googleapis.com/v0/b/hpc-enterprises.appspot.com/o/initial.png?alt=media&token=022c3fe6-cb2b-456f-8985-94b77c3a4c21",
-                            "Balance":0,
+                            "Reg":reg.text,
                           });
                           Fluttertoast.showToast(
                               msg: "A verification mail has been sent please verify to start using the application.",
