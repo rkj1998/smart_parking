@@ -21,6 +21,8 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
 
 
+
+
   TextEditingController pw = TextEditingController();
   TextEditingController email = TextEditingController();
   bool _obscureText = true;
@@ -58,6 +60,7 @@ class _StartPageState extends State<StartPage> {
     checkLoginStatus();
     // TODO: implement initState
     super.initState();
+
   }
 
   @override
