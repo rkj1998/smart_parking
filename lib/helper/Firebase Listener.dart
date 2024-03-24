@@ -43,7 +43,10 @@ class ForegroundServicePaymentHandler extends TaskHandler {
       print(registrationNumber);
     }
     try {
-      print(FirebaseFirestore.instance.collection("parking_sessions").doc());
+      print(FirebaseFirestore.instance
+          .collection('parking_sessions')
+          .where('registration_number', isEqualTo: registrationNumber)
+          .snapshots());
       parkingSessionsSubscription = FirebaseFirestore.instance
           .collection('parking_sessions')
           .where('registration_number', isEqualTo: registrationNumber)

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parking/Paint/CustomPaintHome.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:smart_parking/Widget/recents.dart';
+import 'package:smart_parking/helper/Payments.dart';
 import 'dart:io';
 import '../helper/Firebase Listener.dart';
 
@@ -169,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       trailing: GestureDetector(
                         onTap: (){
-
+                          initiatePayment("10");
                         },
                         child: Icon(
                             Icons.search,
