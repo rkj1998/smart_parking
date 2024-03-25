@@ -32,8 +32,6 @@ class ForegroundServicePaymentHandler extends TaskHandler {
     );
 
     initNotifications();
-
-
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     var data = await fireStore.collection("User Info").doc(FirebaseAuth.instance.currentUser!.uid).get();
     ProfileData.assignData(data.data());

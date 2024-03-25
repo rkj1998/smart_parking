@@ -6,6 +6,8 @@ import 'package:smart_parking/Widget/Search.dart';
 import 'package:smart_parking/Widget/recents.dart';
 import 'dart:io';
 import '../helper/Firebase Listener.dart';
+import 'History.dart';
+import 'PaymentsPage.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -108,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Colors.blueAccent,
@@ -173,17 +175,20 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Payments'),
               onTap: () {
-                // Handle payments action
-                // Navigate to the payments screen or show a dialog
-                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PaymentDetails()));
               },
             ),
             ListTile(
               title: const Text('History'),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HistoryPage()), // Navigate to HistoryPage
+                );
                 // Handle history action
                 // Navigate to the history screen or show a dialog
-                Navigator.pop(context); // Close the drawer
               },
             ),
           ],

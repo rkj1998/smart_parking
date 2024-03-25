@@ -1,4 +1,6 @@
 // payment_helper.dart
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pay/pay.dart';
 import 'package:smart_parking/const.dart';
 
@@ -33,8 +35,30 @@ void initiatePayment(String amount) async {
     // Consider showing an alternative payment method
   }
 }
+ void onGooglePayResult(paymentResult) {
 
-void onGooglePayResult(paymentResult) {
-  // Handle Google Pay payment result
-  // Send the resulting Google Pay token to your server / PSP
-}
+      // Get the registration number from your system
+      String registrationNumber = ProfileData.userData['Reg'];
+
+      // Iterate through documents in the 'detected_texts' collection
+      FirebaseFirestore.instance
+          .collection('detected_texts')
+          .get()
+          .then((querySnapshot) {
+        for (var doc in querySnapshot.docs) {
+          // Compare the 'text' field with the registration number
+          if (doc.data()['text'] == registrationNumber) {
+            // Check if document has exactly two fields
+            if (doc.data().length == 2) {
+              // Update the document to mark it as paid
+              doc.reference.update({'isPaid': true});
+            }
+          }
+        }
+      }).catchError((error) {
+        if (kDebugMode) {
+          print('Error updating documents: $error');
+        }
+      });
+    }
+
