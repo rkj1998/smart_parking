@@ -6,48 +6,22 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart'; // Import url_launcher package
 import 'package:smart_parking/const.dart';
 
-class Recents extends StatefulWidget {
+
+class Search extends StatefulWidget {
+  final String searchTerm;
+  const Search({super.key,required this.searchTerm});
+
   @override
-  State createState() => _RecentsState();
+  State<Search> createState() => _SearchState();
 }
 
-class _RecentsState extends State<Recents> {
+class _SearchState extends State<Search> {
   List<dynamic> nearbyParkingList = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchNearbyParking();
-  }
-
-  Future<void> _fetchNearbyParking() async {
-    await _requestLocationPermission(); // Request location permission
-    Position position = await _getCurrentLocation();
-    if (kDebugMode) {
-      print(position);
-    }
-
-    const String placesEndpoint =
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
-    final String location =
-        '${position.latitude},${position.longitude}';
-    const String radius = '1000'; // Radius in meters, adjust as needed
-    const String type = 'parking';
-    const String keyword = 'parking';
-
-    final String request =
-        '$placesEndpoint?location=$location&radius=$radius&type=$type&keyword=$keyword&key=$apiKey';
-
-    final http.Response response = await http.get(Uri.parse(request));
-
-    if (response.statusCode == 200) {
-      final dynamic data = json.decode(response.body);
-      setState(() {
-        nearbyParkingList = data['results'];
-      });
-    } else {
-      throw Exception('Failed to load nearby parking');
-    }
+    _fetchNearbyParking(widget.searchTerm);
   }
 
   Future<void> _requestLocationPermission() async {
@@ -70,6 +44,37 @@ class _RecentsState extends State<Recents> {
         desiredAccuracy: LocationAccuracy.high);
     return position;
   }
+  Future<void> _fetchNearbyParking(String searchTerm) async {
+    await _requestLocationPermission(); // Request location permission
+    Position position = await _getCurrentLocation();
+    final String location =
+        '${position.latitude},${position.longitude}';
+    print("HERE");
+    print(searchTerm);
+    const String placesEndpoint =
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+    const String radius = '1000'; // Radius in meters, adjust as needed
+    // Remove keyword parameter or adjust for a more specific search term
+    // const String type = 'parking';
+    final String request =
+        '$placesEndpoint?location=$location&radius=$radius&type=parking&key=$apiKey';
+
+    print(request);
+    final http.Response response = await http.get(Uri.parse(request));
+
+    if (response.statusCode == 200) {
+      final dynamic data = json.decode(response.body);
+      print(response.body);
+      // The response contains information about parking locations, not availability
+      setState(() {
+        nearbyParkingList = data['results'];
+      });
+    } else {
+      throw Exception('Failed to load nearby parking');
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -138,3 +143,5 @@ class _RecentsState extends State<Recents> {
     }
   }
 }
+
+

@@ -1,13 +1,11 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parking/Paint/CustomPaintHome.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:smart_parking/Widget/Search.dart';
 import 'package:smart_parking/Widget/recents.dart';
-import 'package:smart_parking/helper/Payments.dart';
 import 'dart:io';
 import '../helper/Firebase Listener.dart';
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -23,15 +21,15 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: implement initState
     super.initState();
     initForegroundTaskAndStartService();
-
   }
 
+  bool searching = false;
+  TextEditingController search = TextEditingController();
 
   Future<void> _requestPermissionForAndroid() async {
     if (!Platform.isAndroid) {
       return;
     }
-
 
     // Android 12 or higher, there are restrictions on starting a foreground service.
     //
@@ -102,50 +100,100 @@ class _MyHomePageState extends State<MyHomePage> {
       callback: startForegroundTaskCallback,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.blueAccent,
+                Colors.greenAccent,
+                Colors.lightGreenAccent,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white.withOpacity(0.9),
+                size: 26,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+        title: const Center(
+          child: Text(
+            'Smart Park',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 34,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Quickstand',
+            ),
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.blueAccent,
+                    Colors.greenAccent,
+                    Colors.lightGreenAccent,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Payments'),
+              onTap: () {
+                // Handle payments action
+                // Navigate to the payments screen or show a dialog
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: const Text('History'),
+              onTap: () {
+                // Handle history action
+                // Navigate to the history screen or show a dialog
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+          ],
+        ),
+      ),
       body: Stack(
         children: <Widget>[
           TopBar_home(),
           Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: AppBar(
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Icon(
-                      Icons.menu,
-                      color: Colors.white.withOpacity(0.9),
-                      size: 26,
-                    ),
-                  ),
-                  title: const Center(
-                    child: Text(
-                      'Smart Park',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 34,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Quickstand'
-                      ),
-                    ),
-                  ),
-                  actions: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: Icon(
-                        Icons.settings,
-                        color: Colors.white.withOpacity(0.9),
-                        size: 24,
-                      ),
-                    )
-                  ],
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.only(left: 28,top: 40,right: 28,bottom: 10),
                 child: Card(
@@ -158,22 +206,35 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: ListTile(
                       title: TextField(
-                        enabled: false,
+                        controller: search,
                         decoration: InputDecoration.collapsed(
-                            hintText: 'Where do you go?',
-                          hintStyle: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[700],
-                            letterSpacing: 0.2
-                          )
+                            hintText: 'Where do you want to go to ?',
+                            hintStyle: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey[700],
+                                letterSpacing: 0.2
+                            )
                         ),
                       ),
                       trailing: GestureDetector(
                         onTap: (){
-                          initiatePayment("10");
+
+
+                          if(search.text.isEmpty){
+                            setState(() {
+                              searching=false;
+                            });
+
+                          }
+                          else{
+                            setState(() {
+                              searching = true;
+                            });
+                          }
+
                         },
                         child: Icon(
-                            Icons.search,
+                          Icons.search,
                           size: 27,
                           color: Colors.orange[400],
                         ),
@@ -182,7 +243,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              Recents(),
+              searching?
+              Search(searchTerm: search.text,):Recents()
             ],
           )
         ],
